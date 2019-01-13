@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import { map } from 'lodash';
 
 const BASE_URL = 'https://api.tenor.com/v1/search'
 const TENOR_API_KEY = 'XQHHNC2RUPOC';
@@ -12,14 +13,17 @@ function createSearchUrl(searchQuery) {
   return `${BASE_URL}?${searchParams.toString()}`;
 }
 
-export function search(searchQuery) {
-  return dispatch => {
-    const url = createSearchUrl(searchQuery);
-    fetch(url)
-      .then(r => r.json())
-      .then(data => {
+export function formatResultsTenor(data) {
+  const images = map(data.results, img => ({
+    id: img.id,
+    src: img.media[0].gif.url
+  }));
 
-      })
-      .catch(e => { console.error(e); });
-  };
+  return images;
+}
+
+export function searchTenor(searchQuery) {
+  const url = createSearchUrl(searchQuery);
+  return fetch(url)
+    .then(r => r.json())
 }

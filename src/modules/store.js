@@ -1,4 +1,7 @@
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+
+import ui from './ui';
 
 export const LOCAL_STORAGE_KEY = 'reduxState';
 
@@ -28,8 +31,10 @@ function saveState(state) {
 const localStorageState = loadState();
 const store = createStore(
   combineReducers({
+    ui
   }),
-  localStorageState
+  localStorageState,
+  applyMiddleware(thunk)
 );
 
 store.subscribe(() => {
