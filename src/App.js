@@ -7,6 +7,7 @@ import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import AlbumContainer from './components/AlbumContainer';
 import ImageModal from './components/ImageModal';
+import NextButton from './components/NextButton';
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
           <div className={styles.searchContainer}>
             <SearchBar />
             <SearchResults />
+            <NextButton />
           </div>
 
           <div className={styles.albumContainer}>

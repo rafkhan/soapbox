@@ -9,34 +9,54 @@ const STORE_SEARCH_RESULTS = 'STORE_SEARCH_RESULTS';
 const SET_LOADING_STATE = 'SET_LOADING_STATE';
 const OPEN_MODAL = 'OPEN_MODAL';
 const CLOSE_MODAL = 'CLOSE_MODAL';
+const SET_SEARCH_POSITION = 'SET_SEARCH_POSITION';
 
 const DEFAULT_STATE = {
   page: 0,
   provider: TENOR,
+
   search: '',
   searchResultsLoading: false,
   searchResults: [],
+  searchPosition: 0,
 
   modalOpen: false,
   modalContent: null
 };
 
-function updateSearch(provider, searchQuery) {
+
+function updateSearch(provider, searchQuery, searchPosition = 0) {
   return dispatch => {
     dispatch({
       type: UPDATE_SEARCH,
       payload: searchQuery
     });
 
+    if(searchQuery === '') {
+      dispatch(storeSearchResults([]));
+      dispatch(setSearchPosition(0));
+      return;
+    }
+
     dispatch(setLoading(true));
 
     // Giphy API was down when I made this :(
     if(provider === TENOR) {
-      return searchTenor(searchQuery)
+      return searchTenor(searchQuery, searchPosition)
         .then(formatResultsTenor)
-        .then(normalizedResults => dispatch(storeSearchResults(normalizedResults)))
+        .then(results => {
+          dispatch(storeSearchResults(results.images));
+          dispatch(setSearchPosition(results.next));
+        })
         .then(() => dispatch(setLoading(false)));
     }
+  };
+}
+
+function setSearchPosition(searchPosition) {
+  return {
+    type: SET_SEARCH_POSITION,
+    payload: parseInt(searchPosition)
   };
 }
 
@@ -112,6 +132,12 @@ export default function uiReducer(state = DEFAULT_STATE, action) {
         ...state,
         modalOpen: false,
         modalContent: null
+      };
+
+    case SET_SEARCH_POSITION:
+      return {
+        ...state,
+        searchPosition: action.payload
       };
     default:
       return state;

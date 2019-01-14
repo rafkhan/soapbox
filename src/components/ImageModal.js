@@ -48,7 +48,6 @@ class ImageModal extends React.Component {
   };
 
   render() {
-
     const {
       modalOpen,
       modalContent
@@ -87,7 +86,7 @@ class ImageModal extends React.Component {
             Add to this Album
           </button>
         </div>
-        <button onClick={this.closeModal}>close</button>
+        <button onClick={this.closeModal}>Close</button>
       </Modal>
     );
   }
