@@ -6,6 +6,7 @@ import store from './modules/store';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import AlbumContainer from './components/AlbumContainer';
+import ImageModal from './components/ImageModal';
 
 class App extends Component {
   render() {
@@ -21,6 +22,8 @@ class App extends Component {
           <div className={styles.albumContainer}>
             <AlbumContainer />
           </div>
+
+          <ImageModal />
         </div>
       </Provider>
     );

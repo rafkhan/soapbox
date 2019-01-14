@@ -8,7 +8,7 @@ import { addImageToAlbum } from '../modules/albums';
 import styles from '../stylesheets/SearchResults.module.scss';
 
 
-const SearchResults = ({ ui, addImageToAlbum }) => {
+const SearchResults = ({ ui, openModal }) => {
   return (
     <div className={styles.SearchResults}>
       { ui.searchResultsLoading ?
@@ -16,7 +16,7 @@ const SearchResults = ({ ui, addImageToAlbum }) => {
         map(ui.searchResults, v => (
           <div className={styles.imageContainer} key={v.srcId}>
             <img
-              onClick={() => addImageToAlbum('e63459bb-9d9d-4d55-9014-3f05c2fa9918', v)}
+              onClick={() => openModal(v)}
               alt='suppressing warning with this'
               src={v.src}
             />
@@ -26,11 +26,4 @@ const SearchResults = ({ ui, addImageToAlbum }) => {
     </div>
   );
 };
-
-export default compose(
-  withUi,
-  connect(
-    null,
-    { addImageToAlbum }
-  )
-)(SearchResults);
+export default withUi(SearchResults);

@@ -5,30 +5,9 @@ import { map, isEqual } from 'lodash';
 
 import NewAlbum from './NewAlbum';
 import Album from './Album';
-import { reorderAlbumImages } from '../modules/albums';
+import { reorderAlbumImages, reorder, move } from '../modules/albums';
 import styles from '../stylesheets/AlbumContainer.module.scss'
 
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
-
-const move = (source, destination, droppableSource, droppableDestination) => {
-  const sourceClone = Array.from(source);
-  const destClone = Array.from(destination);
-  const [removed] = sourceClone.splice(droppableSource.index, 1);
-
-  destClone.splice(droppableDestination.index, 0, removed);
-
-  const result = {};
-  result[droppableSource.droppableId] = sourceClone;
-  result[droppableDestination.droppableId] = destClone;
-
-  return result;
-};
 
 class AlbumContainer extends Component {
   shouldComponentUpdate(nextProps) {
@@ -37,7 +16,6 @@ class AlbumContainer extends Component {
 
   onDragEnd = result => {
     const { source, destination } = result;
-    console.log(destination);
 
     // dropped outside the list
     if (!destination) {
@@ -45,6 +23,7 @@ class AlbumContainer extends Component {
     }
 
     if(source.droppableId === destination.droppableId) {
+      // Dropped in same album
       const items = reorder(
         this.props.albums[destination.droppableId].images,
         source.index,
@@ -53,6 +32,7 @@ class AlbumContainer extends Component {
 
       this.props.reorderAlbumImages(destination.droppableId, items);
     } else {
+      // Dropped in different album
       const result = move(
         this.props.albums[source.droppableId].images,
         this.props.albums[destination.droppableId].images,
@@ -64,7 +44,6 @@ class AlbumContainer extends Component {
         this.props.reorderAlbumImages(key, result[key]);
       }
     }
-
   };
 
   render() {
