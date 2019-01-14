@@ -25,6 +25,7 @@ class NewAlbum extends Component {
         />
         <button onClick={() => {
           this.props.createAlbum(this.state.albumNameInput);
+          this.setState({ albumNameInput: '' })
         }}>
           Create New Album
         </button>

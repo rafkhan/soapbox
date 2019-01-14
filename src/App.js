@@ -20,7 +20,6 @@ class App extends Component {
 
           <div className={styles.albumContainer}>
             <AlbumContainer />
-            {/* <Album /> */}
           </div>
         </div>
       </Provider>

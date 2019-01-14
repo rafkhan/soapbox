@@ -1,4 +1,4 @@
-import { set, concat } from 'lodash';
+import { set, concat, cloneDeep } from 'lodash';
 import uuid from 'uuid/v4';
 
 const ADD_IMAGE_TO_ALBUM = 'ADD_IMAGE_TO_ALBUM';
@@ -10,9 +10,17 @@ export function addImageToAlbum(albumId, image) {
     type: ADD_IMAGE_TO_ALBUM,
     payload: {
       albumId,
-      image
+      image,
+      imageId: uuid()
     }
   };
+}
+
+function handleAddImageToAlbum(state, { albumId, image, imageId }) {
+  const album = cloneDeep(state[albumId]); // force shallow eq to fail
+  const newImages = concat(album.images, { ...image, id: imageId });
+  album.images = newImages;
+  return album;
 }
 
 export function reorderAlbumImages(albumId, images) {
@@ -25,13 +33,12 @@ export function reorderAlbumImages(albumId, images) {
   };
 }
 
-function handleAddImageToAlbum(state, { albumId, image }) {
-  const newImages = concat(state[albumId].images, image);
-  return set(state, [albumId, 'images'], newImages);
-}
-
 function handleImageReorder(state, { albumId, images }) {
-  return set(state, [albumId, 'images'], images);
+  // return set(state, [albumId, 'images'], images);
+  console.log(images);
+  const album = cloneDeep(state[albumId]); // force shallow eq to fail
+  album.images = images;
+  return album;
 }
 
 export function createAlbum(name) {
@@ -43,7 +50,7 @@ export function createAlbum(name) {
   };
 }
 
-function handleCreateAlbum(state, { name }) {
+function handleCreateAlbum({ name }) {
   const albumId = uuid();
   const album = {
     albumId,
@@ -51,17 +58,31 @@ function handleCreateAlbum(state, { name }) {
     images: []
   };
 
-  return set(state, albumId, album);
+  return album;
 }
 
 export default function albumsReducer(state = {}, action) {
+  let updatedAlbum;
   switch(action.type) {
     case CREATE_ALBUM:
-      return handleCreateAlbum(state, action.payload);
+      updatedAlbum = handleCreateAlbum(action.payload);
+      return {
+        ...state,
+        [updatedAlbum.albumId]: updatedAlbum
+      };
     case ADD_IMAGE_TO_ALBUM:
-      return handleAddImageToAlbum(state, action.payload);
+      updatedAlbum = handleAddImageToAlbum(state, action.payload);
+      return {
+        ...state,
+        [updatedAlbum.albumId]: updatedAlbum
+      };
+      // return handleAddImageToAlbum(state, action.payload);
     case REORDER_ALBUM_IMAGES:
-      return handleImageReorder(state, action.payload);
+      updatedAlbum = handleImageReorder(state, action.payload);
+      return {
+        ...state,
+        [updatedAlbum.albumId]: updatedAlbum
+      };
     default:
       return state;
   }

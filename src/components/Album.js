@@ -11,24 +11,16 @@ class Album extends Component {
     this.state = {
       items: props.ui.searchResults
     };
-    this.onDragEnd = this.onDragEnd.bind(this);
-  }
-
-  onDragEnd(result) {
-    // dropped outside the list
-    if (!result.destination) {
-      return;
-    }
   }
 
   render() {
     const {
       album
     } = this.props;
-    console.log(album);
 
     return (
-      <div className={styles.scrollWrapper}>
+      <div className={styles.wrapper}>
+        <h3>{ album.name }</h3>
         <Droppable droppableId={album.albumId}>
           {(provided, snapshot) => (
             <div
@@ -36,13 +28,14 @@ class Album extends Component {
               className={styles.Album}
             >
               {album.images.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
+                <Draggable key={`${item.id}-${album.albumId}`} draggableId={item.id} index={index}>
                   {(provided, snapshot) => (
                     <div
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       style={provided.draggableProps.style}
+                      className={styles.droppable}
                     >
                       <img
                         alt='suppress warning'

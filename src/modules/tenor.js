@@ -15,7 +15,7 @@ function createSearchUrl(searchQuery) {
 
 export function formatResultsTenor(data) {
   const images = map(data.results, img => ({
-    id: img.id,
+    srcId: img.id,
     src: img.media[0].gif.url
   }));
 
