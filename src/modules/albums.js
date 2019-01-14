@@ -1,4 +1,4 @@
-import { set, concat, cloneDeep } from 'lodash';
+import { concat, cloneDeep } from 'lodash';
 import uuid from 'uuid/v4';
 
 const ADD_IMAGE_TO_ALBUM = 'ADD_IMAGE_TO_ALBUM';

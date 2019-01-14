@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import styles from '../stylesheets/NewAlbum.module.scss';
 import Input from './Input';

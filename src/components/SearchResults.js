@@ -1,9 +1,6 @@
 import React from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
 import { map } from 'lodash';
 import { withUi } from '../modules/ui';
-import { addImageToAlbum } from '../modules/albums';
 
 import styles from '../stylesheets/SearchResults.module.scss';
 

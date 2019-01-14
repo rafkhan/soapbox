@@ -66,7 +66,7 @@ class ImageModal extends React.Component {
         style={customStyles}
       >
         <div>
-          <img src={modalContent.src} />
+          <img alt='supress warning' src={modalContent.src} />
         </div>
         <div className={styles.form}>
           <select
