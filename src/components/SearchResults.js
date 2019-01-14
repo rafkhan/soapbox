@@ -16,7 +16,7 @@ const SearchResults = ({ ui, addImageToAlbum }) => {
         map(ui.searchResults, v => (
           <div className={styles.imageContainer}>
             <img
-              onClick={() => addImageToAlbum('2cdde6c8-0465-4978-8aa7-ded43bb89e78', v)}
+              onClick={() => addImageToAlbum('76b67f5e-832c-472b-9a71-b0b0948fbd75', v)}
               alt='suppressing warning with this'
               key={v.id}
               src={v.src}

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 const Input = ({ placeHolder, value, onChange, className = ''}) => (
   <input
-    placeHolder={placeHolder}
+    placeholder={placeHolder}
     className={classNames(styles.Input, className)}
     value={value}
     onChange={e => {

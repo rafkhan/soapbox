@@ -4,14 +4,6 @@ import { withUi } from '../modules/ui';
 
 import styles from '../stylesheets/Album.module.scss'
 
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
-
 
 class Album extends Component {
   constructor(props) {
@@ -27,16 +19,6 @@ class Album extends Component {
     if (!result.destination) {
       return;
     }
-
-    const items = reorder(
-      this.state.items,
-      result.source.index,
-      result.destination.index
-    );
-
-    this.setState({
-      items,
-    });
   }
 
   render() {
