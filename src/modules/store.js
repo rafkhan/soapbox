@@ -2,6 +2,7 @@ import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 import ui from './ui';
+import albums from './albums';
 
 export const LOCAL_STORAGE_KEY = 'reduxState';
 
@@ -31,7 +32,8 @@ function saveState(state) {
 const localStorageState = loadState();
 const store = createStore(
   combineReducers({
-    ui
+    ui,
+    albums
   }),
   localStorageState,
   applyMiddleware(thunk)

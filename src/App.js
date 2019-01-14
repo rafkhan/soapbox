@@ -5,6 +5,7 @@ import styles from './stylesheets/App.module.scss';
 import store from './modules/store';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
+import AlbumContainer from './components/AlbumContainer';
 
 class App extends Component {
   render() {
@@ -18,7 +19,8 @@ class App extends Component {
           </div>
 
           <div className={styles.albumContainer}>
-            Test
+            <AlbumContainer />
+            {/* <Album /> */}
           </div>
         </div>
       </Provider>

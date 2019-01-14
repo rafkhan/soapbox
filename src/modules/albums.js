@@ -1,22 +1,22 @@
-import { set } from 'lodash';
+import { set, concat } from 'lodash';
 import uuid from 'uuid/v4';
 
 const ADD_IMAGE_TO_ALBUM = 'ADD_IMAGE_TO_ALBUM';
 const CREATE_ALBUM = 'CREATE_ALBUM';
 
-export function addImageToAlbum(albumId, imageId, image) {
+export function addImageToAlbum(albumId, image) {
   return {
     type: ADD_IMAGE_TO_ALBUM,
     payload: {
       albumId,
-      imageId,
       image
     }
   };
 }
 
-function handleAddImageToAlbum(state, { albumId, imageId, image }) {
-  return set(state, [albumId, 'images', imageId], image);
+function handleAddImageToAlbum(state, { albumId, image }) {
+  const newImages = concat(state[albumId].images, image);
+  return set(state, [albumId, 'images'], newImages);
 }
 
 export function createAlbum(name) {
@@ -33,7 +33,7 @@ function handleCreateAlbum(state, { name }) {
   const album = {
     albumId,
     name,
-    images: {}
+    images: []
   };
 
   return set(state, albumId, album);
