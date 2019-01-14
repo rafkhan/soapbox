@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 
-import './App.css';
+import styles from './stylesheets/App.module.scss';
 import store from './modules/store';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
@@ -10,8 +10,17 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <SearchBar />
-        <SearchResults />
+        <div className={styles.App}>
+        
+          <div className={styles.searchContainer}>
+            <SearchBar />
+            <SearchResults />
+          </div>
+
+          <div className={styles.albumContainer}>
+            Test
+          </div>
+        </div>
       </Provider>
     );
   }

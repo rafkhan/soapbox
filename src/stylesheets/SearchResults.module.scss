@@ -1,0 +1,18 @@
+.SearchResults {
+  overflow-y: scroll;
+}
+
+.imageContainer {
+  width: 100%;
+  padding: 8px 16px;
+
+  img {
+    width: 100%;
+    cursor: pointer;
+    transition: opacity ease 0.2s;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}

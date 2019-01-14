@@ -1,0 +1,18 @@
+.App {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.searchContainer {
+  flex: 1;
+  height: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.albumContainer {
+  flex: 5;
+  background-color: #E0E0E0;
+}
